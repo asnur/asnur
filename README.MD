@@ -25,3 +25,5 @@
     <td><p>&nbsp;<img align="center" src="https://github-readme-stats.vercel.app/api?username=asnur&show_icons=true&locale=en" alt="asnur" /></p></td>
  </tr>
 </table>
+
+<p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=asnur&" alt="asnur" /></p>
