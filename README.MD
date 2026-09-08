@@ -25,6 +25,9 @@
 ![Go](https://img.shields.io/badge/Go-%2300ADD8.svg?style=for-the-badge&logo=go&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![Rust](https://img.shields.io/badge/Rust-b7410e?style=for-the-badge&logo=rust&logoColor=white)
+![Javascript](https://img.shields.io/badge/JavaScript-f7df1e?style=for-the-badge&logo=javascript&logoColor=black)
+![Typescript](https://img.shields.io/badge/TypeScript-3178c6?style=for-the-badge&logo=typescript&logoColor=white)
 
 **Databases & Messaging:**
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
@@ -39,14 +42,3 @@
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white)
 ![NATS](https://img.shields.io/badge/NATS-27AAE1?style=for-the-badge&logo=nats&logoColor=white)
-
-### 🏆 Highlights & Experience
-* 📺 **High-Traffic Media Systems:** Led backend core services serving **20M+ MAU**. Reduced API latency by 72% and optimized real-time Smart TV pairing to achieve a 99% success rate.
-* 🚕 **On-Demand Platform Architecture:** Architected and delivered 16 microservices for a platform within 6 months, integrating geospatial driver-matching and live order tracking.
-* 🗺️ **GIS & Data Intensive Services:** Developed robust RESTful APIs for GIS-based applications, optimized spatial queries, and handled high-throughput data processing (80M+ engagement events).
-
-### 📊 GitHub Stats
-<p align="left">
-  <!-- Note: Replace YOUR_GITHUB_USERNAME with your actual GitHub username to activate these stats -->
-  <img src="https://github-readme-stats.vercel.app/api?username=asnur&show_icons=true&theme=transparent&hide_border=true&title_color=00ADD8&icon_color=00ADD8" alt="GitHub Stats" />
-</p>
