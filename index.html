@@ -1,0 +1,1020 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Muhammad Asnur Ramdani</title>
+<meta name="description" content="Muhammad Asnur Ramdani, Backend Engineer specializing in Go, distributed systems, and cloud-native architecture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap">
+<style>
+  :root {
+    --bg: #EEF2F5;
+    --surface: #F8FAFB;
+    --ink: #132029;
+    --muted: #55636E;
+    --line: #CBD5DC;
+    --line-soft: #DDE4E9;
+    --accent: #00708C;
+    --accent-soft: #D3EBF1;
+    --warm: #A65F00;
+    --warm-soft: #F4E3CC;
+    --sans: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #0D141A;
+      --surface: #131D25;
+      --ink: #DDE6EC;
+      --muted: #8E9DA8;
+      --line: #2A3945;
+      --line-soft: #1E2A33;
+      --accent: #4CC4E2;
+      --accent-soft: #11313B;
+      --warm: #E3A24A;
+      --warm-soft: #33260F;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0D141A;
+    --surface: #131D25;
+    --ink: #DDE6EC;
+    --muted: #8E9DA8;
+    --line: #2A3945;
+    --line-soft: #1E2A33;
+    --accent: #4CC4E2;
+    --accent-soft: #11313B;
+    --warm: #E3A24A;
+    --warm-soft: #33260F;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding-inline: 24px;
+  }
+  @media (max-width: 480px) { .wrap { padding-inline: 16px; } }
+
+  .mono { font-family: var(--mono); }
+  .label {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 20;
+    padding-block: 18px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  section, .job { scroll-margin-top: 84px; }
+  .brand {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .brand span { color: var(--accent); }
+  .nav { display: flex; gap: 20px; flex-wrap: wrap; }
+  .nav a {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .nav a:hover { color: var(--ink); }
+  .menu-btn { display: none; }
+
+  @media (max-width: 720px) {
+    .menu-btn {
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 42px;
+      height: 42px;
+      padding: 0 11px;
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      background: var(--surface);
+      cursor: pointer;
+    }
+    .menu-btn span {
+      display: block;
+      height: 2px;
+      border-radius: 1px;
+      background: var(--ink);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .menu-btn[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-btn[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .menu-btn[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      gap: 0;
+      padding-block: 4px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-top: 0;
+      border-radius: 0 0 4px 4px;
+      box-shadow: 0 12px 24px -12px color-mix(in srgb, var(--ink) 30%, transparent);
+    }
+    .nav.open { display: flex; }
+    .nav a {
+      padding: 14px 18px;
+      font-size: 15px;
+      color: var(--ink);
+      border-bottom: 1px dashed var(--line-soft);
+    }
+    .nav a:last-child { border-bottom: 0; color: var(--accent); font-weight: 600; }
+  }
+  @media (prefers-reduced-motion: reduce) { .menu-btn span { transition: none; } }
+
+  /* ---------- hero ---------- */
+  .hero { padding-block: 64px 72px; display: grid; gap: 40px; }
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+    flex: none;
+  }
+  .hero h1 {
+    margin: 18px 0 0;
+    font-size: clamp(44px, 8.4vw, 104px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+  .hero h1 .thin { font-weight: 500; color: var(--muted); }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 48px;
+    align-items: start;
+  }
+  .role {
+    margin: 0 0 16px;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.35;
+    text-wrap: balance;
+  }
+  .role em { font-style: normal; color: var(--accent); }
+  .summary { margin: 0; max-width: 58ch; color: var(--muted); font-size: 17px; }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid var(--ink);
+    border-radius: 3px;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .btn.primary { background: var(--ink); color: var(--bg); }
+  .btn:hover { border-color: var(--accent); }
+  .btn.primary:hover { background: var(--accent); color: var(--bg); }
+
+  /* metrics readout */
+  .readout {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .readout-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .readout-head .label { display: inline-flex; align-items: center; gap: 10px; }
+  .readout-head .dot { width: 6px; height: 6px; box-shadow: 0 0 0 3px var(--accent-soft); }
+  .readout ul { list-style: none; margin: 0; padding: 6px 18px 10px; }
+  .readout li {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding-block: 9px;
+    border-bottom: 1px dashed var(--line-soft);
+  }
+  .readout li:last-child { border-bottom: 0; }
+  .readout .k { color: var(--muted); flex: 1 1 auto; min-width: 0; }
+  .readout .v {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .readout .v small { font-size: 12px; font-weight: 500; color: var(--muted); margin-left: 2px; }
+  .readout .v.good { color: var(--accent); }
+
+  /* ---------- sections ---------- */
+  section { padding-block: 72px; border-top: 1px solid var(--line); }
+  .sec-head {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 32px;
+    margin-bottom: 40px;
+  }
+  .sec-head h2 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+  .sec-head p { margin: 8px 0 0; max-width: 62ch; color: var(--muted); }
+
+  /* selected systems */
+  .systems {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 48px;
+  }
+  .sys {
+    padding-block: 26px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    gap: 10px;
+    align-content: start;
+  }
+  .sys-top { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+  .sys h3 { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.3; }
+  .sys .metric {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--accent);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .sys p { margin: 0; color: var(--muted); max-width: 60ch; }
+  .sys .stack { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: 0.02em; }
+  .sys .stack b { color: var(--ink); font-weight: 500; }
+
+  /* ---------- career trace ---------- */
+  .trace-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .trace {
+    min-width: 700px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+  .trace-row {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    align-items: stretch;
+    border-bottom: 1px solid var(--line-soft);
+    text-decoration: none;
+    color: inherit;
+  }
+  .trace-row:last-child { border-bottom: 0; }
+  a.trace-row:hover { background: var(--accent-soft); }
+  a.trace-row:hover .bar { filter: brightness(1.08); }
+  .trace-name {
+    padding: 11px 16px;
+    border-right: 1px solid var(--line);
+    display: grid;
+    line-height: 1.35;
+    min-width: 0;
+  }
+  .trace-name b {
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .trace-name span { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .track {
+    position: relative;
+    margin-inline: 14px;
+    background-image: linear-gradient(to right, var(--line-soft) 1px, transparent 1px);
+    background-size: calc(100% / 6) 100%;
+  }
+  .axis .trace-name { color: var(--muted); padding-block: 10px; }
+  .axis .track { background: none; }
+  .tick {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .bar {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: var(--l);
+    width: var(--w);
+    height: 20px;
+    border-radius: 2px;
+    background: var(--accent);
+  }
+  .bar.part {
+    background: repeating-linear-gradient(135deg, var(--warm) 0 6px, color-mix(in srgb, var(--warm) 70%, var(--surface)) 6px 11px);
+  }
+  .dur {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    font-size: 11px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .dur.in { left: 8px; color: var(--surface); }
+  .bar.part .dur.in {
+    color: var(--ink);
+    background: var(--surface);
+    padding: 0 5px;
+    border-radius: 2px;
+  }
+  .dur.out { left: calc(100% + 8px); color: var(--muted); }
+  .now-line {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: var(--now);
+    width: 0;
+    border-left: 1px dashed var(--accent);
+    pointer-events: none;
+  }
+  .now-tag {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: var(--now);
+    padding: 1px 6px;
+    background: var(--accent);
+    color: var(--surface);
+    border-radius: 2px;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .bar.live::after {
+    content: "";
+    position: absolute;
+    right: -4px; top: 50%;
+    width: 8px; height: 8px;
+    margin-top: -4px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s ease-out infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent); }
+    100% { box-shadow: 0 0 0 10px transparent; }
+  }
+  @media (prefers-reduced-motion: reduce) { .bar.live::after { animation: none; } }
+  .legend {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 8px; }
+  .swatch { width: 22px; height: 10px; border-radius: 2px; background: var(--accent); }
+  .swatch.part { background: repeating-linear-gradient(135deg, var(--warm) 0 4px, color-mix(in srgb, var(--warm) 70%, var(--surface)) 4px 7px); }
+
+  /* ---------- experience ---------- */
+  .job {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 32px;
+    padding-block: 36px;
+    border-top: 1px solid var(--line);
+  }
+  .job:first-of-type { border-top: 0; padding-top: 0; }
+  .job-meta { display: grid; gap: 6px; align-content: start; font-family: var(--mono); font-size: 13px; color: var(--muted); }
+  .job-meta .when { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .chip {
+    justify-self: start;
+    margin-top: 6px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .chip.part { background: var(--warm-soft); color: var(--warm); }
+  .job h3 { margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.015em; line-height: 1.25; }
+  .job .title { margin: 4px 0 0; font-weight: 500; color: var(--muted); }
+  .job h4 {
+    margin: 26px 0 0;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.01em;
+  }
+  .job ul { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; max-width: 70ch; }
+  .job li { position: relative; padding-left: 22px; }
+  .job li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0.72em;
+    width: 10px; height: 1px;
+    background: var(--accent);
+  }
+  .job strong {
+    font-family: var(--mono);
+    font-size: 0.92em;
+    font-weight: 600;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+  .role-step + .role-step { margin-top: 30px; padding-top: 26px; border-top: 1px dashed var(--line); }
+
+  /* ---------- skills ---------- */
+  .skills {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 32px;
+  }
+  .skill-group h3 { margin: 0 0 14px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    padding: 4px 10px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    background: var(--surface);
+  }
+
+  /* ---------- education ---------- */
+  .edu { display: grid; gap: 0; }
+  .edu-row {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr) auto;
+    gap: 32px;
+    align-items: baseline;
+    padding-block: 18px;
+    border-top: 1px solid var(--line);
+  }
+  .edu-row:first-child { border-top: 0; padding-top: 0; }
+  .edu-row .yr { font-family: var(--mono); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .edu-row b { display: block; font-size: 18px; }
+  .edu-row span { color: var(--muted); }
+  .edu-row .loc { font-family: var(--mono); font-size: 13px; color: var(--muted); }
+
+  /* ---------- contact ---------- */
+  .contact h2 {
+    margin: 0;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    text-wrap: balance;
+    max-width: 18ch;
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px 48px;
+    margin-top: 40px;
+    max-width: 760px;
+  }
+  .contact-item { display: grid; gap: 8px; align-content: start; min-width: 0; }
+  .contact-item .val {
+    font-family: var(--mono);
+    font-size: 15px;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+    user-select: all;
+  }
+  .contact-item a.val { text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 4px; user-select: auto; }
+  .contact-item a.val:hover { text-decoration-color: var(--accent); }
+  .copy {
+    justify-self: start;
+    padding: 5px 12px;
+    font-size: 12px;
+  }
+  footer {
+    padding-block: 28px 40px;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 860px) {
+    .hero { padding-block: 44px 56px; }
+    .hero-grid, .sec-head, .job, .edu-row { grid-template-columns: minmax(0, 1fr); }
+    .sec-head, .job, .edu-row { gap: 12px; }
+    .systems { grid-template-columns: minmax(0, 1fr); }
+    .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .contact-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+    section { padding-block: 56px; }
+  }
+  @media (max-width: 480px) {
+    .skills { grid-template-columns: minmax(0, 1fr); }
+    .role { font-size: 19px; }
+    .sys-top { flex-direction: column; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <a class="brand" href="#top">asnur<span>.</span>ramdani</a>
+    <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav" id="site-nav" aria-label="Sections">
+      <a href="#systems">Systems</a>
+      <a href="#trace">Trace</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+      <a href="CV%20-%20MUHAMMAD%20ASNUR%20RAMDANI%20-%20REV%20-%20OPT.pdf" download="CV-Muhammad-Asnur-Ramdani.pdf">CV ↓</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <div class="hero">
+      <div>
+        <span class="status label"><span class="dot"></span>Backend Engineer · Jakarta, Indonesia</span>
+        <h1>Muhammad Asnur <span class="thin">Ramdani</span></h1>
+      </div>
+      <div class="hero-grid">
+        <div>
+          <p class="role">I build <em>Go</em> services and distributed systems that stay fast under real traffic.</p>
+          <p class="summary">Backend engineer with 5+ years of software engineering experience. I design scalable microservices, real-time systems, and data-intensive services serving 20M+ monthly users, with a focus on performance, concurrency, caching, messaging, Kubernetes, and cloud-native architecture.</p>
+          <div class="cta">
+            <a class="btn primary" href="CV%20-%20MUHAMMAD%20ASNUR%20RAMDANI%20-%20REV%20-%20OPT.pdf" download="CV-Muhammad-Asnur-Ramdani.pdf">Download CV ↓</a>
+            <a class="btn" href="mailto:asnurramdhani12@gmail.com">Email me</a>
+            <a class="btn" href="https://www.linkedin.com/in/asnurramdani/" target="_blank" rel="noopener">LinkedIn ↗</a>
+          </div>
+        </div>
+        <aside class="readout" aria-label="Production metrics">
+          <div class="readout-head">
+            <span class="label"><span class="dot"></span>Production metrics</span>
+            <span class="label">prod</span>
+          </div>
+          <ul>
+            <li><span class="k">Monthly active users, Player Service</span><span class="v">20M+</span></li>
+            <li><span class="k">Peak throughput</span><span class="v">3K+<small>req/s</small></span></li>
+            <li><span class="k">Recommendation API latency</span><span class="v good">−72%</span></li>
+            <li><span class="k">Abusive and bot traffic</span><span class="v good">−98%</span></li>
+            <li><span class="k">Smart TV pairing, avg time</span><span class="v">0.3<small>s</small></span></li>
+            <li><span class="k">Engagement events in ClickHouse</span><span class="v">80M+</span></li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+
+    <section id="systems">
+      <div class="sec-head">
+        <div class="label">Selected systems</div>
+        <div>
+          <h2>Things I've designed and run in production</h2>
+          <p>A few systems from recent work, with the number each one was judged by.</p>
+        </div>
+      </div>
+      <div class="systems">
+        <article class="sys">
+          <div class="sys-top"><h3>Smart TV pairing</h3><span class="metric">0.3 s · 99%</span></div>
+          <p>Real-time pairing between phones and Smart TVs for Vision+, used by 250K+ users. Average pairing time is 0.3 seconds with a 99% success rate.</p>
+          <div class="stack"><b>Go</b> · WebSockets · Redis · Kubernetes</div>
+        </article>
+        <article class="sys">
+          <div class="sys-top"><h3>API gateway protection</h3><span class="metric">−98% bots</span></div>
+          <p>Custom KrakenD middleware for rate limiting, JWT authentication, CAPTCHA, and CSRF protection. Abusive and bot traffic dropped by 98%.</p>
+          <div class="stack"><b>KrakenD</b> · Go plugins · JWT · Redis</div>
+        </article>
+        <article class="sys">
+          <div class="sys-top"><h3>Content discovery pipeline</h3><span class="metric">−72% latency</span></div>
+          <p>Recombee-powered FYP and feeds for Vision+ Short (3M+ users), plus ClickHouse analytics over 80M+ engagement events. Reusing HTTP connections cut Recombee API latency by 72%.</p>
+          <div class="stack"><b>Go</b> · Recombee · ClickHouse · RabbitMQ</div>
+        </article>
+        <article class="sys">
+          <div class="sys-top"><h3>On-demand platform</h3><span class="metric">16 services · 6 mo</span></div>
+          <p>Led the backend for a Gojek-like platform: driver matching, search, promotion, notification, and payment, with geospatial order matching and real-time communication.</p>
+          <div class="stack"><b>Go</b> · Elasticsearch · Google Maps API · NATS · ArgoCD</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="trace">
+      <div class="sec-head">
+        <div class="label">Career trace</div>
+        <div>
+          <h2>Five years, laid out like a distributed trace</h2>
+          <p>Each span is one role on a shared time axis. Striped spans are freelance or part-time work that ran alongside a full-time role.</p>
+        </div>
+      </div>
+      <div class="trace-scroll">
+        <div class="trace" role="img" aria-label="Timeline of roles from 2021 to present">
+          <div class="trace-row axis">
+            <div class="trace-name">span / role</div>
+            <div class="track">
+              <span class="tick" style="left:0%">2021</span>
+              <span class="tick" style="left:16.667%">2022</span>
+              <span class="tick" style="left:33.333%">2023</span>
+              <span class="tick" style="left:50%">2024</span>
+              <span class="tick" style="left:66.667%">2025</span>
+              <span class="tick" style="left:83.333%">2026</span>
+            </div>
+          </div>
+          <a class="trace-row" href="#exp-automata">
+            <div class="trace-name"><b>Automata Info Nusantara</b><span>Web Developer</span></div>
+            <div class="track"><div class="bar" style="--l:6.944%;--w:4.167%"><span class="dur out">3m</span></div></div>
+          </a>
+          <a class="trace-row" href="#exp-dpmptsp">
+            <div class="trace-name"><b>DPMPTSP DKI Jakarta</b><span>Full Stack Engineer</span></div>
+            <div class="track"><div class="bar" style="--l:13.889%;--w:16.667%"><span class="dur in">1y</span></div></div>
+          </a>
+          <a class="trace-row" href="#exp-dpmptsp">
+            <div class="trace-name"><b>DPMPTSP DKI Jakarta</b><span>Backend Engineer</span></div>
+            <div class="track"><div class="bar" style="--l:29.167%;--w:23.611%"><span class="dur in">1y 5m</span></div></div>
+          </a>
+          <a class="trace-row" href="#exp-nerdvana">
+            <div class="trace-name"><b>Nerdvana Solusi Teknologi</b><span>Backend Engineer</span></div>
+            <div class="track"><div class="bar part" style="--l:30.556%;--w:63.889%"><span class="dur in">3y 10m</span></div></div>
+          </a>
+          <a class="trace-row" href="#exp-vision">
+            <div class="trace-name"><b>MNC OTT Network (Vision+)</b><span>Backend Engineer</span></div>
+            <div class="track"><div class="bar live" id="bar-vision" style="--l:51.389%;--w:44.444%"><span class="dur in" id="dur-vision">2y 8m · ongoing</span></div></div>
+          </a>
+          <a class="trace-row" href="#exp-smbi">
+            <div class="trace-name"><b>Super Multi Bisnis Internasional</b><span>Lead Backend Developer</span></div>
+            <div class="track"><div class="bar part" style="--l:73.611%;--w:8.333%"><span class="dur out">6m</span></div></div>
+          </a>
+          <div class="trace-row axis">
+            <div class="trace-name">now</div>
+            <div class="track" id="now-track" style="--now:95.833%">
+              <span class="now-line"></span>
+              <span class="now-tag" id="now-tag">Sep 2026</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="legend">
+        <span><i class="swatch"></i>Full-time</span>
+        <span><i class="swatch part"></i>Freelance / part-time</span>
+        <span>Select a span to jump to the role</span>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="sec-head">
+        <div class="label">Experience</div>
+        <div><h2>Where I've worked</h2></div>
+      </div>
+
+      <article class="job" id="exp-vision">
+        <div class="job-meta">
+          <span class="when">Feb 2024 – Present</span>
+          <span>Jakarta</span>
+          <span class="chip">Full-time</span>
+        </div>
+        <div>
+          <h3>PT. MNC OTT Network (Vision+)</h3>
+          <p class="title">Backend Engineer</p>
+
+          <h4>Vision+ Short · Content discovery &amp; recommendation</h4>
+          <ul>
+            <li>Owned backend development for Vision+ Short's content discovery and recommendation pipeline, serving <strong>3M+</strong> users.</li>
+            <li>Integrated Recombee for personalized FYP and content feeds, processing <strong>2K+</strong> user events per day.</li>
+            <li>Reduced Recombee API latency by <strong>72%</strong> by reusing HTTP connections and eliminating repeated TCP/TLS handshakes.</li>
+            <li>Built ClickHouse analytics pipelines processing <strong>80M+</strong> engagement events for content ranking, personalization, and editorial insights.</li>
+            <li>Designed content classification and clustering systems organizing <strong>25K+</strong> content items across <strong>300+</strong> genres.</li>
+          </ul>
+
+          <h4>Vision+ Core Platform</h4>
+          <ul>
+            <li>Led development of the Player Service supporting <strong>20M+</strong> monthly active users using Golang and Kubernetes.</li>
+            <li>Built a real-time Smart TV pairing system serving <strong>250K+</strong> users, with <strong>99%</strong> pairing success and <strong>0.3s</strong> average pairing time.</li>
+            <li>Developed content processing and delivery pipelines using AWS MediaConvert, MediaPackage, and S3.</li>
+            <li>Built custom KrakenD middleware for rate limiting, JWT authentication, CAPTCHA, and CSRF protection, reducing abusive and bot traffic by <strong>98%</strong>.</li>
+            <li>Optimized backend performance with Redis, RabbitMQ, and Go concurrency, sustaining <strong>3K+ req/s</strong> during peak traffic.</li>
+            <li>Operated <strong>4+</strong> microservices on Kubernetes with OpenTelemetry-based observability.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="job" id="exp-smbi">
+        <div class="job-meta">
+          <span class="when">Jun 2025 – Nov 2025</span>
+          <span>Jakarta</span>
+          <span class="chip part">Freelance / Part-time</span>
+        </div>
+        <div>
+          <h3>PT Super Multi Bisnis Internasional</h3>
+          <p class="title">Lead Backend Developer</p>
+          <ul>
+            <li>Led architecture and end-to-end backend delivery of <strong>16</strong> microservices for a Gojek-like on-demand platform within <strong>6 months</strong>.</li>
+            <li>Designed a standardized service architecture, boilerplates, and internal SDKs adopted across the platform.</li>
+            <li>Architected core services including driver matching, search, promotion, notification, and payment.</li>
+            <li>Built geospatial driver-order matching using Elasticsearch, Google Maps API, and RabbitMQ, plus real-time communication using WebSockets, TURN, and NATS.</li>
+            <li>Managed Kubernetes infrastructure and CI/CD using Docker, Helm, Jenkins, and ArgoCD.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="job" id="exp-nerdvana">
+        <div class="job-meta">
+          <span class="when">Nov 2022 – Aug 2026</span>
+          <span>Jakarta</span>
+          <span class="chip part">Freelance / Part-time</span>
+        </div>
+        <div>
+          <h3>PT Nerdvana Solusi Teknologi</h3>
+          <p class="title">Backend Engineer</p>
+          <ul>
+            <li>Developed Golang APIs for internal banking applications with secure role-based access control (RBAC).</li>
+            <li>Built and deployed containerized microservices on an on-premises Kubernetes cluster.</li>
+            <li>Implemented gRPC for service-to-service communication across microservices.</li>
+            <li>Designed and optimized PostgreSQL transactional queries for consistency and performance under load.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="job" id="exp-dpmptsp">
+        <div class="job-meta">
+          <span class="when">Nov 2021 – Feb 2024</span>
+          <span>Jakarta</span>
+          <span class="chip">Full-time</span>
+        </div>
+        <div>
+          <h3>DPMPTSP DKI Jakarta</h3>
+          <div class="role-step">
+            <p class="title">Backend Engineer · Oct 2022 – Feb 2024</p>
+            <ul>
+              <li>Developed and maintained scalable RESTful APIs in Golang for GIS-based government applications.</li>
+              <li>Integrated GeoServer services and improved API performance with Redis in-memory caching.</li>
+              <li>Built and deployed containerized backend services using Docker and Kubernetes.</li>
+              <li>Designed and implemented a dynamic Form Builder API using Golang and MongoDB.</li>
+            </ul>
+          </div>
+          <div class="role-step">
+            <p class="title">Full Stack Engineer · Nov 2021 – Oct 2022</p>
+            <ul>
+              <li>Built GIS-enabled web applications integrating Golang APIs, GeoServer, and Mapbox.</li>
+              <li>Implemented real-time features using WebSockets for instant in-app communication.</li>
+              <li>Optimized map rendering by converting GeoJSON to vector tiles using Protobuf.</li>
+              <li>Designed and optimized spatial queries using PostGIS and PostgreSQL.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="job" id="exp-automata">
+        <div class="job-meta">
+          <span class="when">Jun 2021 – Aug 2021</span>
+          <span>Bekasi, West Java</span>
+          <span class="chip">Full-time</span>
+        </div>
+        <div>
+          <h3>PT Automata Info Nusantara</h3>
+          <p class="title">Web Developer</p>
+          <ul>
+            <li>Developed an internal business and asset management web application for operational tracking and reporting.</li>
+            <li>Built and deployed a full-stack application using PHP, JavaScript, HTML, and CSS.</li>
+            <li>Implemented CI/CD pipelines with GitHub Actions for automated build and deployment.</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <section id="skills">
+      <div class="sec-head">
+        <div class="label">Skills</div>
+        <div><h2>Tools I reach for</h2></div>
+      </div>
+      <div class="skills">
+        <div class="skill-group">
+          <h3 class="label">Languages &amp; backend</h3>
+          <div class="tags">
+            <span class="tag">Go</span><span class="tag">Python</span><span class="tag">PHP</span><span class="tag">JavaScript</span><span class="tag">gRPC</span><span class="tag">Microservices</span><span class="tag">WebSockets</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3 class="label">Data &amp; messaging</h3>
+          <div class="tags">
+            <span class="tag">PostgreSQL</span><span class="tag">PostGIS</span><span class="tag">MongoDB</span><span class="tag">ClickHouse</span><span class="tag">Elasticsearch</span><span class="tag">Redis</span><span class="tag">RabbitMQ</span><span class="tag">NATS</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3 class="label">Infrastructure</h3>
+          <div class="tags">
+            <span class="tag">Kubernetes</span><span class="tag">Docker</span><span class="tag">AWS</span><span class="tag">KrakenD</span><span class="tag">Nginx</span><span class="tag">OpenTelemetry</span><span class="tag">Grafana</span><span class="tag">Helm</span><span class="tag">ArgoCD</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3 class="label">Domains</h3>
+          <div class="tags">
+            <span class="tag">OTT &amp; media delivery</span><span class="tag">Recommendation</span><span class="tag">Geospatial / GIS</span><span class="tag">On-demand platforms</span><span class="tag">Banking internal apps</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <div class="sec-head">
+        <div class="label">Education</div>
+        <div><h2>Education</h2></div>
+      </div>
+      <div class="edu">
+        <div class="edu-row">
+          <span class="yr">2025</span>
+          <div><b>STT Terpadu Nurul Fikri</b><span>Bachelor's Degree, Informatics</span></div>
+          <span class="loc">Depok, West Java</span>
+        </div>
+        <div class="edu-row">
+          <span class="yr">2020</span>
+          <div><b>SMK Insan Kreatif</b><span>Vocational School, Computer and Network Engineering</span></div>
+          <span class="loc">Bogor, West Java</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="label">Contact</div>
+      <h2 style="margin-top:14px">Have a system that needs to scale? Let's talk.</h2>
+      <div class="contact-grid">
+        <div class="contact-item">
+          <span class="label">Email</span>
+          <span class="val" id="email">asnurramdhani12@gmail.com</span>
+          <button class="btn copy" id="copy-email" type="button">Copy email</button>
+        </div>
+        <div class="contact-item">
+          <span class="label">LinkedIn</span>
+          <a class="val" href="https://www.linkedin.com/in/asnurramdani/" target="_blank" rel="noopener">linkedin.com/in/asnurramdani</a>
+        </div>
+        <div class="contact-item">
+          <span class="label">Based in</span>
+          <span class="val">Jakarta, Indonesia</span>
+        </div>
+        <div class="contact-item">
+          <span class="label">Résumé</span>
+          <span class="val">PDF · 2 pages · 104 KB</span>
+          <a class="btn primary copy" href="CV%20-%20MUHAMMAD%20ASNUR%20RAMDANI%20-%20REV%20-%20OPT.pdf" download="CV-Muhammad-Asnur-Ramdani.pdf">Download CV ↓</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© <span id="year">2026</span> Muhammad Asnur Ramdani</span>
+    <span>Built with plain HTML &amp; CSS</span>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    // Keep the "ongoing" span and the now-marker in step with today's date.
+    var AXIS_START = 2021, AXIS_MONTHS = 72, VISION_START = 37; // Feb 2024
+    var d = new Date();
+    var elapsed = Math.min((d.getFullYear() - AXIS_START) * 12 + d.getMonth() + 1, AXIS_MONTHS);
+    var pct = function (m) { return (m / AXIS_MONTHS * 100).toFixed(3) + "%"; };
+
+    var bar = document.getElementById("bar-vision");
+    if (bar && elapsed > VISION_START) bar.style.setProperty("--w", pct(elapsed - VISION_START));
+
+    var track = document.getElementById("now-track");
+    if (track) track.style.setProperty("--now", pct(elapsed));
+
+    var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    var tag = document.getElementById("now-tag");
+    if (tag) tag.textContent = months[d.getMonth()] + " " + d.getFullYear();
+
+    // Months in role, counting Feb 2024 and the current month.
+    var total = (d.getFullYear() - 2024) * 12 + d.getMonth();
+    var parts = [];
+    if (Math.floor(total / 12)) parts.push(Math.floor(total / 12) + "y");
+    if (total % 12) parts.push(total % 12 + "m");
+    var dur = document.getElementById("dur-vision");
+    if (dur && total > 0) dur.textContent = parts.join(" ") + " · ongoing";
+
+    var yr = document.getElementById("year");
+    if (yr) yr.textContent = d.getFullYear();
+
+    // Hamburger menu for small screens.
+    var menuBtn = document.getElementById("menu-btn");
+    var nav = document.getElementById("site-nav");
+    var setMenu = function (open) {
+      nav.classList.toggle("open", open);
+      menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    };
+    if (menuBtn && nav) {
+      menuBtn.addEventListener("click", function () {
+        setMenu(menuBtn.getAttribute("aria-expanded") !== "true");
+      });
+      nav.addEventListener("click", function (e) {
+        if (e.target.closest("a")) setMenu(false);
+      });
+      document.addEventListener("click", function (e) {
+        if (!e.target.closest(".topbar")) setMenu(false);
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && nav.classList.contains("open")) {
+          setMenu(false);
+          menuBtn.focus();
+        }
+      });
+      var desktop = window.matchMedia("(min-width: 721px)");
+      var onChange = function () { if (desktop.matches) setMenu(false); };
+      desktop.addEventListener ? desktop.addEventListener("change", onChange) : desktop.addListener(onChange);
+    }
+
+    var btn = document.getElementById("copy-email");
+    var email = document.getElementById("email");
+    if (btn && email) {
+      btn.addEventListener("click", function () {
+        var text = email.textContent.trim();
+        var done = function (msg) {
+          btn.textContent = msg;
+          setTimeout(function () { btn.textContent = "Copy email"; }, 1800);
+        };
+        var selectIt = function () {
+          var r = document.createRange();
+          r.selectNodeContents(email);
+          var s = window.getSelection();
+          s.removeAllRanges();
+          s.addRange(r);
+          done("Selected, press Ctrl/⌘+C");
+        };
+        try {
+          navigator.clipboard.writeText(text).then(function () { done("Copied"); }, selectIt);
+        } catch (e) { selectIt(); }
+      });
+    }
+  })();
+</script>
+</body>
+</html>
